@@ -9,8 +9,8 @@
 
 int test_lwarx(volatile int* a) {
   // CHECK: @test_lwarx
-  // CHECK: %1 = bitcast i32* %0 to i8*
-  // CHECK: %2 = call i32 @llvm.ppc.lwarx(i8* %1)
+  // CHECK: %0 = load i32*, i32** %a.addr, align
+  // CHECK: %1 = call i32 asm sideeffect "lwarx $0, ${1:y}", "=r,*Z,~{memory}"(i32* %0)
   return __lwarx(a);
 }
 int test_stwcx(volatile int* a, int val) {

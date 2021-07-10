@@ -10,8 +10,7 @@
 long test_ldarx(volatile long* a) {
   // CHECK64-LABEL: @test_ldarx
   // CHECK64: %0 = load i64*, i64** %a.addr, align 8
-  // CHECK64: %1 = bitcast i64* %0 to i8*
-  // CHECK64: %2 = call i64 @llvm.ppc.ldarx(i8* %1)
+  // CHECK64: %1 = call i64 asm sideeffect "ldarx $0, ${1:y}", "=r,*Z,~{memory}"(i64* %0)
   // CHECK32-ERROR: error: this builtin is only available on 64-bit targets
   return __ldarx(a);
 }

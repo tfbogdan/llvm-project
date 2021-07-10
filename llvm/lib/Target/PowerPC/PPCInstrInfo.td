@@ -5412,7 +5412,5 @@ def DWBytes3210 {
 def : Pat<(i64 (bitreverse i64:$A)),
   (OR8 (RLDICR DWBytes7654.DWord, 32, 31), DWBytes3210.DWord)>;
 
-def : Pat<(int_ppc_lwarx ForceXForm:$dst),
-          (LWARX ForceXForm:$dst)>;
 def : Pat<(int_ppc_stwcx ForceXForm:$dst, gprc:$A),
           (STWCX gprc:$A, ForceXForm:$dst)>;
