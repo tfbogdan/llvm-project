@@ -1,0 +1,25 @@
+
+
+public string:= class:
+
+    data:= const char*
+    size:= int
+
+public:
+    <constructor>:
+        size = 0
+        data = new const char[4]
+        data[0] = 0;
+
+    <constructor> (text :: const char*, sz :: int):
+        size = sz
+        data = new const char[sz]
+        memcpy text sz data;
+
+    <destructor>:
+        if data delete data;
+
+    front:= f(<this>) -> char:
+        return data[0]
+
+; // class

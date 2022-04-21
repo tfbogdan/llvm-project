@@ -1,0 +1,22 @@
+---
+# We'll use defaults from the LLVM style, but with 4 columns indentation.
+BasedOnStyle: LLVM
+IndentWidth: 4
+---
+Language: Cpp
+ColumnLimit: 120
+AllowShortEnumsOnASingleLine: false
+BreakConstructorInitializersBeforeComma: true
+BreakBeforeInheritanceComma: true
+AllowShortFunctionsOnASingleLine: false
+MaxEmptyLinesToKeep: 2
+AlignTrailingComments: true
+AlignConsecutiveBitFields: true
+AllowShortLoopsOnASingleLine: false
+AllowShortBlocksOnASingleLine: Never
+AllowShortLambdasOnASingleLine: All
+AllowShortCaseLabelsOnASingleLine: true
+ReflowComments: true
+UseCRLF: false
+# EmptyLineBeforeAccessModifier: Always
+PenaltyReturnTypeOnItsOwnLine: 10

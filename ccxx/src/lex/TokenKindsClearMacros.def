@@ -1,0 +1,23 @@
+#ifndef TOK
+#define TOK(...)
+#endif
+
+#ifndef KEYWORD
+#define KEYWORD(...)
+#endif
+
+#ifndef PUNCTUATOR
+#define PUNCTUATOR(...)
+#endif
+
+#ifndef TYPE_MODIFIER
+#define TYPE_MODIFIER(...)
+#endif
+
+#ifndef FUNDAMENTAL_TYPE
+#define FUNDAMENTAL_TYPE(...)
+#endif
+
+#ifndef TYPE_QUALIFIER
+#define TYPE_QUALIFIER(...)
+#endif

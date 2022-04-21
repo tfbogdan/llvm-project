@@ -1,0 +1,28 @@
+from string import string
+from stringstream import stringstream as ss
+
+/// formats a string. may use arbitrary expressions for formatting.
+/// example:
+/// a := "World"
+/// b := f"Hello, {a}!"
+/// b == "Hello, World!" True!
+
+public format := f(<callsite>, format :: string) -> string:
+    result: string      // Result is a string instance
+    stream: ss result   //
+
+    for C in format:
+        if C != '{':
+            starting_index := <index>
+            continue while C != '{' finally stream << format.slice starting_index <index>;
+        else:
+            continue for 1times else throw "String ended while looking for '}'"
+            if C == '{' stream << '{'
+            else:
+                starting_index := <index>
+                continue while C != '}' else throw "String ended while looking for '}'"
+                stream << <callsite>.evaluate format.slice starting_index <index>
+                continue for 1times;;;
+    return result
+    ;
+

@@ -1,0 +1,7 @@
+
+
+stringstream: class {
+    // TDO
+}
+
+export stringstream

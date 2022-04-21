@@ -1,0 +1,8 @@
+
+public strview := class:
+    start := const char*
+    end := const char*
+
+
+;
+

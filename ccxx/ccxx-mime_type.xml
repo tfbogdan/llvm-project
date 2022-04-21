@@ -1,0 +1,7 @@
+<?xml version="1.0"?>
+ <mime-info xmlns='http://www.freedesktop.org/standards/shared-mime-info'>
+   <mime-type type="text/ccxxsrc">
+    <comment>CCXX source file</comment>
+    <glob pattern="*.ccxx"/>
+  </mime-type>
+ </mime-info>

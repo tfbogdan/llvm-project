@@ -1,0 +1,37 @@
+// This is a line comment
+/*
+    And this is a block comment
+*/
+
+def extern putchar(character: int) -> int;
+def extern puts(s: *const char) -> int;
+
+
+// This is a variable definition, initialized to the type of the expression on the right of '='
+let varA: int = (1 + 2) * 3;
+
+// A constant, made so by virtue of the const type qualifier
+// let varAA :: const unsigned short = 4;
+
+// A string variable. More specifically, a char[13] variable
+// let aString = "Hello world!";
+
+// This is a function taking 3 arguments with specific types
+def sum3(arg1: int, arg2: int, arg3: int) -> int : arg1 + arg2 + arg3;
+
+// a very simple function, relying on type inference for it's x parameter
+// function simpleFunction(x)
+//    : x + 1;
+
+// @todo another simple function that also does type inference, but captures the type of it's x parameter
+// function anotherSimpleF(x :: Integral ? T)
+//     : x * x;
+
+// @todo a function returning a type
+// func funcReturningType<x :: type>
+//    : float if x == int else double;
+
+// Another function. the type of args should read (left to right) as:
+
+def main(argc: const int, argv: const *const *const char) -> int
+    : puts("World's first hello!!") + sum3(12, 23, varA);

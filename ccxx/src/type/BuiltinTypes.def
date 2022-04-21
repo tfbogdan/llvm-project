@@ -1,0 +1,74 @@
+
+#ifndef BUILTIN_TYPE
+#define BUILTIN_TYPE(TypeName)
+#endif
+
+#ifndef VOID_TYPE
+#define VOID_TYPE(TypeName) BUILTIN_TYPE(TypeName)
+#endif
+
+#ifndef BOOL_TYPE
+#define BOOL_TYPE(TypeName) BUILTIN_TYPE(TypeName)
+#endif
+
+#ifndef INTEGER_TYPE
+#define INTEGER_TYPE(TypeName) BUILTIN_TYPE(TypeName)
+#endif
+
+#ifndef SIGNED_INTEGER_TYPE
+#define SIGNED_INTEGER_TYPE(TypeName) INTEGER_TYPE(TypeName)
+#endif
+
+#ifndef UNSIGNED_INTEGER_TYPE
+#define UNSIGNED_INTEGER_TYPE(TypeName) INTEGER_TYPE(TypeName)
+#endif
+
+#ifndef SIGNED_CHAR_TYPE
+#define SIGNED_CHAR_TYPE(TypeName) SIGNED_INTEGER_TYPE(TypeName)
+#endif
+
+#ifndef UNSIGNED_CHAR_TYPE
+#define UNSIGNED_CHAR_TYPE(TypeName) UNSIGNED_INTEGER_TYPE(TypeName)
+#endif
+
+#ifndef FLOATING_POINT_TYPE
+#define FLOATING_POINT_TYPE(TypeName) BUILTIN_TYPE(TypeName)
+#endif
+
+VOID_TYPE(Void)
+
+/**
+ * At the moment we assume all integral types are ordered by their size. In fact, integer sizes vary from platform to
+ * platform but we can at least be certain that
+ * sizeof(char) <= sizeof(short) <= sizeof(int) <= sizeof(long) <= sizeof(long long)
+ * However, a more foolproof method of encoding this relationship might be required.
+ * */
+BOOL_TYPE(Bool)
+
+SIGNED_CHAR_TYPE(SignedChar)
+UNSIGNED_CHAR_TYPE(UnsignedChar)
+
+SIGNED_INTEGER_TYPE(SignedShort)
+UNSIGNED_INTEGER_TYPE(UnsignedShort)
+
+SIGNED_INTEGER_TYPE(SignedInt)
+UNSIGNED_INTEGER_TYPE(UnsignedInt)
+
+SIGNED_INTEGER_TYPE(SignedLong)
+UNSIGNED_INTEGER_TYPE(UnsignedLong)
+
+SIGNED_INTEGER_TYPE(SignedLongLong)
+UNSIGNED_INTEGER_TYPE(UnsignedLongLong)
+
+FLOATING_POINT_TYPE(Float)
+FLOATING_POINT_TYPE(Double)
+
+#undef SIGNED_INTEGER_TYPE
+#undef UNSIGNED_INTEGER_TYPE
+#undef SIGNED_CHAR_TYPE
+#undef SIGNED_CHAR_TYPE
+#undef FLOATING_POINT_TYPE
+#undef VOID_TYPE
+#undef BOOL_TYPE
+#undef INTEGER_TYPE
+#undef BUILTIN_TYPE

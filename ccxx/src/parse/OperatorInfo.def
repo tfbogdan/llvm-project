@@ -1,0 +1,14 @@
+
+
+#ifndef BINARY_OPERATOR
+#define BINARY_OPERATOR(Name, LeftAssociative, Priority, Token)
+#endif
+
+//              Name               LeftAssociative     Priority        Token
+BINARY_OPERATOR(addition, true, 5, plus)
+BINARY_OPERATOR(substraction, true, 5, minus)
+BINARY_OPERATOR(multiplication, true, 6, star)
+BINARY_OPERATOR(division, true, 6, slash)
+
+
+#undef BINARY_OPERATOR
