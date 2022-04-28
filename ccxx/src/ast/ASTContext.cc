@@ -6,6 +6,7 @@
 #include <target/TargetInfo.hh>
 #include <type/Type.hh>
 #include "semantics/SemanticAnalyzer.hh"
+#include <llvm/ADT/Triple.h>
 
 #include <llvm/Support/Host.h>
 

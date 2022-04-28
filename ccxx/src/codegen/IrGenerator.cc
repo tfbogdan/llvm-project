@@ -12,15 +12,15 @@ ccxx::IRGenerator::IRGenerator(const TargetInfo &T)
     , module(std::make_unique<llvm::Module>("mod", llvmContext)) {
 }
 
-TargetInfo::IntType builtinToIntType(ccxx::BuiltinKind k) {
+ccxx::IntTypes builtinToIntType(ccxx::BuiltinKind k) {
     switch (k) {
 
 #define INTEGER_TYPE(TypeName)                                                                                         \
-    case ccxx::BuiltinKind::TypeName: return clang::TargetInfo::IntType::TypeName;
+    case ccxx::BuiltinKind::TypeName: return ccxx::IntTypes::TypeName;
 // clang-format off
 #include <type/BuiltinTypes.def>
         // clang-format on
-    default: return TargetInfo::IntType::NoInt;
+    default: return ccxx::IntTypes::NoInt;
     }
 }
 
@@ -73,14 +73,14 @@ bool IRGenerator::VisitBinaryOperatorExpr(const BinaryOperatorExpr *binOp) {
 bool IRGenerator::VisitIntegerLiteralExpr(const IntegerLiteralExpr *literal) {
     // @todo: this will trip an assert in llvm::APInt if the value does not fit in the size of an int
     // This is just an attempt to ensure the type of the create value is int, whatever int may be on the target platform
-    llvm::APInt value(Target.getTypeWidth(TargetInfo::IntType::SignedInt),
+    llvm::APInt value(Target.GetIntTypeWidth(ccxx::IntTypes::SignedInt),
                       literal->getValue().getLimitedValue());
     output = llvm::ConstantInt::get(llvmContext, value);
     return true;
 }
 
 bool IRGenerator::VisitCharLiteralExpr(const CharLiteralExpr *literal) {
-    llvm::APInt value(Target.getTypeWidth(TargetInfo::IntType::SignedInt), literal->getValue());
+    llvm::APInt value(Target.GetIntTypeWidth(ccxx::IntTypes::SignedInt), literal->getValue());
     output = llvm::ConstantInt::get(llvmContext, value);
     return true;
 }
@@ -109,7 +109,7 @@ bool IRGenerator::VisitDeclRefExpr(const DeclRefExpr *nameRef) {
     case DeclKind::Value: {
         auto *valueDef = static_cast<const ValueDecl *>(def);
         if (valueDef->getDeclContext()->isGlobalScope()) {
-            output = irBuilder.CreateLoad(module->getNamedGlobal(valueDef->getName()), false,
+            output = irBuilder.CreateLoad(module->getNamedGlobal(valueDef->getName())->getType(), module->getNamedGlobal(valueDef->getName()), false,
                                           llvm::formatv("load_{0}", valueDef->getName()));
         } else {
             // @todo: local variables
@@ -149,7 +149,7 @@ bool IRGenerator::VisitCallExpr(const CallExpr *fcCall) {
                     GV->setAlignment(llvm::Align(1));
 
                     llvm::Constant *Zero =
-                        llvm::ConstantInt::get(llvm::Type::getIntNTy(llvmContext, Target.getIntWidth()), 0);
+                        llvm::ConstantInt::get(llvm::Type::getIntNTy(llvmContext, Target.GetIntTypeWidth(ccxx::IntTypes::SignedInt)), 0);
                     llvm::Constant *Indices[] = {Zero, Zero};
 
                     output = llvm::ConstantExpr::getInBoundsGetElementPtr(GV->getValueType(), GV, Indices);
@@ -236,15 +236,16 @@ bool IRGenerator::VisitValueDecl(const ValueDecl *valueDecl) {
         global->setLinkage(llvm::GlobalValue::LinkageTypes::InternalLinkage);
         global->setInitializer(llvm::ConstantInt::getIntegerValue(
             resultLLVMType,
-            llvm::APInt(Target.getTypeWidth(builtinToIntType(
+            llvm::APInt(Target.GetIntTypeWidth(builtinToIntType(
                             static_cast<const BuiltinType *>(valueDecl->getValueType().getType())->getBuintinKind())),
                         0)));
 
 
         // For global variables whose values are not compile time constants we need to perform initialization via a
         // runtime function
-
+        llvm::getOrCreateSanitizerCtorAndInitFunctions(*module, "__ctor", "__init_globals", {}, {})
         auto *globalInitFunc = llvm::getOrCreateInitFunction(*module, "initGlobals");
+
         globalInitFunc->setLinkage(llvm::GlobalValue::LinkageTypes::InternalLinkage);
         if (!initGlobalsBB) {
             initGlobalsBB = llvm::BasicBlock::Create(llvmContext, llvm::formatv("initGlobals"), globalInitFunc);
@@ -273,7 +274,7 @@ llvm::Type *IRGenerator::mapBuiltinType(const BuiltinType &ty) {
     //    }
     if (ty.isIntegral()) {
         auto intType = builtinToIntType(ty.getBuintinKind());
-        return llvm::Type::getIntNTy(llvmContext, Target.getTypeWidth(intType));
+        return llvm::Type::getIntNTy(llvmContext, Target.GetIntTypeWidth(intType));
     }
 
     return nullptr;

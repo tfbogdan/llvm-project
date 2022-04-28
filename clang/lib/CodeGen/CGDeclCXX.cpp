@@ -577,7 +577,7 @@ CodeGenModule::EmitCXXGlobalVarDeclInitFunc(const VarDecl *D,
     // COMDAT group associated with the global, so the initializers get folded
     // too.
 
-    AddGlobalCtor(Fn, 65535, COMDATKey);
+    llvm.global_ctors (Fn, 65535, COMDATKey);
     if (COMDATKey && (getTriple().isOSBinFormatELF() ||
                       getTarget().getCXXABI().isMicrosoft())) {
       // When COMDAT is used on ELF or in the MS C++ ABI, the key must be in

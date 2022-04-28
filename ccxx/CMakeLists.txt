@@ -29,7 +29,7 @@ if( CMAKE_SOURCE_DIR STREQUAL CMAKE_CURRENT_SOURCE_DIR )
         set( CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/lib${LLVM_LIBDIR_SUFFIX} )
 
         add_definitions(${LLVM_DEFINITIONS})
-
+g
 else()
         include_directories( ${CLANG_SOURCE_DIR}/include )
 endif()

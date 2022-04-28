@@ -1,7 +1,7 @@
 #include "TargetInfo.hh"
 
-std::unique_ptr<TargetInfo> ccxx::TargetInfo::CreateTargetInfo() {
-    return std::make_unique<TargetInfo>();
+std::unique_ptr<ccxx::TargetInfo> ccxx::TargetInfo::CreateTargetInfo() {
+    return std::make_unique<ccxx::TargetInfo>();
 }
 
 unsigned ccxx::TargetInfo::GetIntTypeWidth(ccxx::IntTypes intType) const {
