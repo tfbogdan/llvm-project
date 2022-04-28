@@ -1,7 +1,10 @@
 #include "TargetInfo.hh"
 
+ccxx::TargetInfo::~TargetInfo() noexcept = default;
+ccxx::X86TargetInfo::~X86TargetInfo() noexcept = default;
+
 std::unique_ptr<ccxx::TargetInfo> ccxx::TargetInfo::CreateTargetInfo() {
-    return std::make_unique<ccxx::TargetInfo>();
+    return std::make_unique<ccxx::X86TargetInfo>();
 }
 
 unsigned ccxx::TargetInfo::GetIntTypeWidth(ccxx::IntTypes intType) const {
@@ -26,4 +29,12 @@ unsigned ccxx::TargetInfo::GetIntTypeWidth(ccxx::IntTypes intType) const {
         break;
     }
     return 0;
+}
+
+ccxx::X86TargetInfo::X86TargetInfo() {
+    charWidth = 1;
+    shortWidth = 2;
+    intWidth = 4;
+    longWidth = 4;
+    lLongWidth = 8;
 }

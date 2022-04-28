@@ -30,17 +30,24 @@ namespace ccxx {
     };
 
     class TargetInfo {
-        unsigned charWidth;
-        unsigned shortWidth;
-        unsigned intWidth;
-        unsigned longWidth;
-        unsigned lLongWidth;
+      protected:
+        unsigned charWidth = 0;
+        unsigned shortWidth = 0;
+        unsigned intWidth = 0;
+        unsigned longWidth = 0;
+        unsigned lLongWidth = 0;
 
       public:
+        virtual ~TargetInfo() = 0;
         static std::unique_ptr<TargetInfo> CreateTargetInfo();
 
         unsigned GetIntTypeWidth(IntTypes intType) const;
     };
 
+    class X86TargetInfo : public TargetInfo {
+      public:
+        X86TargetInfo();
+        ~X86TargetInfo() override;
+    };
 }
 
