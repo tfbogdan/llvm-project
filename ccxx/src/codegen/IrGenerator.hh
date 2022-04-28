@@ -45,6 +45,7 @@ class IRGenerator : public RecursiveASTVisitor<IRGenerator> {
 
   private:
     const TargetInfo& Target;
+    llvm::Function* getOrCreateInitFunction();
 
     llvm::Type* mapBuiltinType(const BuiltinType &ty);
     llvm::Type* mapPointerType(const PointerType &ty);

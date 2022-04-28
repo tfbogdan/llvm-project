@@ -243,12 +243,10 @@ bool IRGenerator::VisitValueDecl(const ValueDecl *valueDecl) {
 
         // For global variables whose values are not compile time constants we need to perform initialization via a
         // runtime function
-        llvm::getOrCreateSanitizerCtorAndInitFunctions(*module, "__ctor", "__init_globals", {}, {})
-        auto *globalInitFunc = llvm::getOrCreateInitFunction(*module, "initGlobals");
+        auto *InitFunc = getOrCreateInitFunction();
 
-        globalInitFunc->setLinkage(llvm::GlobalValue::LinkageTypes::InternalLinkage);
         if (!initGlobalsBB) {
-            initGlobalsBB = llvm::BasicBlock::Create(llvmContext, llvm::formatv("initGlobals"), globalInitFunc);
+            initGlobalsBB = llvm::BasicBlock::Create(llvmContext, llvm::formatv("initGlobals"), InitFunc);
         }
         auto *BB = initGlobalsBB;
 
@@ -257,14 +255,22 @@ bool IRGenerator::VisitValueDecl(const ValueDecl *valueDecl) {
         TraverseStmt(valueDecl->getInitExpression());
         llvm::Value *valueExpr = output;
 
-        auto *initExprLLVMType =
-            mapBuiltinType(*static_cast<const BuiltinType *>(valueDecl->getInitExpression()->resultType().getType()));
         assert(valueDecl->getValueType().getType() == valueDecl->getInitExpression()->resultType().getType());
-
         irBuilder.CreateStore(valueExpr, global);
     }
 
     return true;
+}
+
+llvm::Function* IRGenerator::getOrCreateInitFunction() {
+    if( auto* F = module->getFunction("__init_globals"); F ) {
+        return F;
+    }
+
+    auto* F = llvm::cast<llvm::Function>(module->getOrInsertFunction("__init_globals", llvm::Type::getVoidTy(llvmContext)).getCallee());
+    llvm::appendToGlobalCtors(*module, F, 0);
+    F->setLinkage( llvm::GlobalValue::InternalLinkage );
+    return F;
 }
 
 llvm::Type *IRGenerator::mapBuiltinType(const BuiltinType &ty) {

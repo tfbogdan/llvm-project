@@ -6,6 +6,7 @@ add_subdirectory(parse)
 add_subdirectory(type)
 add_subdirectory(codegen)
 add_subdirectory(semantics)
+add_subdirectory(target)
 
 #target_link_libraries(ad0 PRIVATE ${FLEX_LIBRARIES})
 

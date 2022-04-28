@@ -10,7 +10,7 @@ unsigned ccxx::TargetInfo::GetIntTypeWidth(ccxx::IntTypes intType) const {
     case IntTypes::UnsignedChar:
         return charWidth;
     case IntTypes::UnsignedShort: [[fallthrough]];
-    case IntTypes::SignedShort
+    case IntTypes::SignedShort:
         return shortWidth;
     case IntTypes::SignedInt: [[fallthrough]];
     case IntTypes::UnsignedInt:
