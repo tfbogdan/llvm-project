@@ -1,0 +1,68 @@
+#define def int
+#define function
+#define let
+
+// This is the definition of a function taking 2 int arguments and returning their sum
+let someFoo :: (arg1: int, arg2: int) -> int {
+    return arg1 + arg2;
+}
+
+// Since the body of the function is only one expression, we can omit creating a block and the return statement. The result of the expression to the right of '=' will be the result of the function.
+let someOtherFoo :: (arg1: int, arg2: int) -> int = arg1 + arg2;
+
+// We can further simplify the definition of the function by omitting its return type
+let someSimplerFoo :: (arg1: int, arg2: int) = arg1 + arg2;
+
+// If we also omit the parameter types, the function becomes generic and can take any parameter types, as long as they can be added together. The return type of the function will be the type of the result of the addition between the two parameters
+let anEvenSimplerFoo :: (arg1, arg2) = arg1 + arg2;
+
+// Let's write a function that we will later augment in some way, programmatically
+let abstractMain :: (args: [*const char]) -> int {
+    // Function calls may omit () if it can be done unambiguously (variadic parameter lists for example need () )
+    return someFoo argc;
+}
+
+// This function takes a function as a parameter and it returns another function with the same signature.
+// In this example, we are trying to add a call counter to every function called by the input function, either directly or indirectly
+// and to the input function itself
+// Note the syntax after the return type for the function. We have both a '=' and a block. This is intentional. The block is essentially the body of the result function.
+// What this means, in essence, is that the body of the resulting function is also the body of the transformation function.
+let addCallCountsToFunctionTree :: <function: (...params)-> retTy = body> -> ( (params...) -> retTy ) = {
+    // A range based for loop. @statement is a compile time construct, clearly determined by it being a compile time parameter
+    // Both because it's defined in <> but also because actual functions can only be passed at compile time
+    // When a function is passed as a parameter to a function that takes a run time parameter (declared in regular parentheses), it resolves to it's address instead
+    // As a result, this loop is executed entirely during compilation
+    for each statement in body {
+        // The body of a function is simply a list of statements. If we want to analyze the function, we can do so by looking at each statement
+        // A statement is an ast node. An ast node may be a leaf node or it may be a complex tree. We are interested in all of the function calls within this function.
+        match statement {
+            case if (cond) body:
+                for statement in body{}
+            case func():
+        }
+
+        // the procedural way
+        if( statement.is_if() ) {
+            statement.get_condition() // do something with it
+        }
+    }
+}
+
+// @todo: This shall be the main function of our program
+let main = addCallCountsToFunctionTree abstractMain
+
+
+let someFunction(M: matrix, N: float) = M * N;
+
+let toHlSl:: <(...params)->retType = body> -> string {
+    let theOutput :: string = ""
+
+    for statement in body {
+        match statement {
+            case return expr:
+                theOutput += "return" +
+        }
+    }
+};
+
+let shaderCode :: string = toHlSl someFunction
