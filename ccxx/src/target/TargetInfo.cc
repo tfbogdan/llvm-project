@@ -1,4 +1,5 @@
 #include "TargetInfo.hh"
+#include <cassert>
 
 ccxx::TargetInfo::~TargetInfo() noexcept = default;
 ccxx::X86TargetInfo::~X86TargetInfo() noexcept = default;

@@ -2,6 +2,7 @@
 
 #include <span>
 #include <ranges>
+#include <llvm/ADT/SmallVector.h>
 
 namespace ccxx {
 

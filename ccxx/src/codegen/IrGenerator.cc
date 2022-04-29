@@ -4,6 +4,7 @@
 
 #include "IrGenerator.hh"
 #include <llvm/Transforms/Utils/ModuleUtils.h>
+#include <llvm/Support/FormatVariadic.h>
 #include <type/BuiltinType.hh>
 
 ccxx::IRGenerator::IRGenerator(const TargetInfo &T)
@@ -186,7 +187,6 @@ bool IRGenerator::VisitFunctionDecl(const FunctionDecl *funcDef) {
     module->getOrInsertFunction(funcDef->getName(), funcTy);
 
     auto *func = module->getFunction(funcDef->getName());
-    int16_t argIx = 0;
     for (llvm::Argument &param : func->args()) {
         param.setName(funcDef->getParam(param.getArgNo())->getName());
     }

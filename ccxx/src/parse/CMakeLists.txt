@@ -4,7 +4,3 @@ target_sources(ccxx PRIVATE
         OperatorInfo.def
         )
 
-target_precompile_headers(ccxx PRIVATE
-        Parser.hh
-        OperatorInfo.hh)
-

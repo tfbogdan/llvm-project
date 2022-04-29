@@ -2,6 +2,7 @@
 
 #include "ast/ASTContext.hh"
 #include "type/Type.hh"
+#include "target/TargetInfo.hh"
 
 #include <llvm/ADT/BitmaskEnum.h>
 
@@ -21,8 +22,6 @@ BinaryOperatorExpr *SemanticAnalyzer::createBinaryOperator(ASTContext &astContex
 
         auto lSignedness = lBuiltin->getSignedness();
         auto rSignedness = rBuiltin->getSignedness();
-
-        Signedness resultSignedness = Signedness::Undefined;
 
         // No arithmetics
         assert(!lBuiltin->isVoid());

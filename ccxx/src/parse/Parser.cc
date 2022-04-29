@@ -16,8 +16,10 @@
 #include <llvm/ADT/StringMap.h>
 #include <llvm/Support/FormatVariadic.h>
 
+#include "target/TargetInfo.hh"
 #include "type/Type.hh"
 #include <parse/OperatorInfo.hh>
+
 
 struct OperatorTokenInfo {
     ccxx::Token tok;
@@ -127,7 +129,7 @@ ccxx::Expr *ccxx::Parser::parseExpression() {
                         // clearly a function call
                         llvm::SmallVector<const Expr *, 4> args;
 
-                        for (auto *param : funcDef->getParams()) {
+                        for ([[maybe_unused]] auto *param : funcDef->getParams()) {
                             args.push_back(parseExpression());
                             lexer.lookaheadDiscard(TokenKind::comma);
                         }
@@ -273,7 +275,8 @@ ccxx::FunctionDecl *ccxx::Parser::parseFunctionDef() {
     // If next token is a <, we have meta arguments
     if (lexer.lookaheadMatch({TokenKind::less})) {
         // Parse all meta arguments until none are left
-        throw std::runtime_error("Not implemented");
+        const bool NotImplemented = false;
+        assert(NotImplemented);
     }
 
     llvm::SmallVector<ParamDecl *, 0> params;
@@ -294,7 +297,6 @@ ccxx::FunctionDecl *ccxx::Parser::parseFunctionDef() {
     }
     functionDef->setParams(params);
 
-    Expr *returnTypeExpr = nullptr;
     if (lexer.lookaheadDiscard(TokenKind::arrow)) {
         functionDef->setReturnTypeExpr(parseTypeExpression());
     } else if ( isExternDefinition ) {
@@ -303,7 +305,6 @@ ccxx::FunctionDecl *ccxx::Parser::parseFunctionDef() {
     }
 
     if ( !isExternDefinition ) {
-        Expr *bodyExpr = nullptr;
         if (lexer.lookaheadDiscard(TokenKind::colon)) {
             functionDef->setBodyExpr(parseExpression());
             if (!lexer.lookaheadDiscard(TokenKind::semicolon)) {
@@ -461,6 +462,7 @@ const ccxx::BuiltinType *ccxx::Parser::parseBuiltinType() {
                 sourceMgr.PrintMessage(mod.loc, DiagKind::DK_Error, "Signedness may only be specified once");
                 exit(-1);
             }
+            break;
         case TokenKind::tok_unsigned:
             if (mods.Sign == Signedness::Undefined) {
                 mods.Sign = Signedness::Unsigned;

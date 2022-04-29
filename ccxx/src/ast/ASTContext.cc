@@ -10,7 +10,7 @@
 
 #include <llvm/Support/Host.h>
 
-ccxx::ASTContext::~ASTContext() = default;
+ccxx::ASTContext::~ASTContext() {}
 
 ccxx::ASTContext::ASTContext()
     : nodeAlloc()

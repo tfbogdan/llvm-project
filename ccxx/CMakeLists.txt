@@ -60,19 +60,6 @@ if (MSVC)
 endif()
 target_compile_features(ccxx PRIVATE cxx_std_20)
 
-target_precompile_headers(ccxx PRIVATE
-        <llvm/ADT/DenseMap.h>
-        <llvm/Support/Allocator.h>
-        <llvm/ADT/SmallString.h>
-        <llvm/ADT/StringRef.h>
-        <llvm/ADT/SmallVector.h>
-        <llvm/Support/FormatVariadic.h>
-
-        <string>
-        <vector>
-        <memory>
-        <array>
-        )
 
 add_subdirectory(src)
 

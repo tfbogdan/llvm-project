@@ -15,16 +15,3 @@ target_sources(ccxx PRIVATE
         Stmt.cc
         Stmt.hh
         )
-
-target_precompile_headers(ccxx PRIVATE
-        ASTContext.hh
-        AST.hh
-        DeclNodes.hh
-        DeclFwd.hh
-        Expr.hh
-        DeclContext.hh
-        Stmt.hh
-        ASTVisitor.hh
-        DeclBase.hh
-        Stmt.hh
-        )

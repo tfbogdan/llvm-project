@@ -34,7 +34,6 @@ class TestVisitor : public ccxx::RecursiveASTVisitor<TestVisitor> {
      bool VisitValueTypeDecl(const ccxx::ValueTypeDecl* D) {
          llvm::outs() << ":";
          TraverseStmt(D->expr());
-         FILE f;
          return true;
      }
 

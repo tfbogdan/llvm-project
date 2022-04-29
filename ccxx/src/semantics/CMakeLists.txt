@@ -3,5 +3,3 @@ target_sources(ccxx PRIVATE
         SemanticAnalyzer.hh
         )
 
-target_precompile_headers(ccxx PRIVATE
-        SemanticAnalyzer.hh)

@@ -5,6 +5,3 @@ target_sources(ccxx PRIVATE
         BuiltinType.cc
 )
 
-target_precompile_headers(ccxx PRIVATE
-        Type.hh
-        BuiltinType.hh)

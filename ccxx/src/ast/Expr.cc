@@ -1,5 +1,6 @@
 #include "Expr.hh"
 #include "ASTContext.hh"
+#include "target/TargetInfo.hh"
 #include "ast/DeclNodes.hh"
 #include "type/Type.hh"
 
