@@ -110,7 +110,7 @@ bool IRGenerator::VisitDeclRefExpr(const DeclRefExpr *nameRef) {
     case DeclKind::Value: {
         auto *valueDef = static_cast<const ValueDecl *>(def);
         if (valueDef->getDeclContext()->isGlobalScope()) {
-            output = irBuilder.CreateLoad(module->getNamedGlobal(valueDef->getName())->getType(), module->getNamedGlobal(valueDef->getName()), false,
+            output = irBuilder.CreateLoad(module->getNamedGlobal(valueDef->getName())->getType()->getNonOpaquePointerElementType(), module->getNamedGlobal(valueDef->getName()), false,
                                           llvm::formatv("load_{0}", valueDef->getName()));
         } else {
             // @todo: local variables

@@ -33,9 +33,9 @@ unsigned ccxx::TargetInfo::GetIntTypeWidth(ccxx::IntTypes intType) const {
 }
 
 ccxx::X86TargetInfo::X86TargetInfo() {
-    charWidth = 1;
-    shortWidth = 2;
-    intWidth = 4;
-    longWidth = 4;
-    lLongWidth = 8;
+    charWidth = 8;
+    shortWidth = 16;
+    intWidth = 32;
+    longWidth = 32;
+    lLongWidth = 64;
 }
