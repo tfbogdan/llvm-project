@@ -647,14 +647,9 @@ bool can_execute(const Twine &Path) {
 
 bool equivalent(file_status A, file_status B) {
   assert(status_known(A) && status_known(B));
-  return A.FileIndexHigh == B.FileIndexHigh &&
-         A.FileIndexLow == B.FileIndexLow && A.FileSizeHigh == B.FileSizeHigh &&
-         A.FileSizeLow == B.FileSizeLow &&
-         A.LastAccessedTimeHigh == B.LastAccessedTimeHigh &&
-         A.LastAccessedTimeLow == B.LastAccessedTimeLow &&
-         A.LastWriteTimeHigh == B.LastWriteTimeHigh &&
-         A.LastWriteTimeLow == B.LastWriteTimeLow &&
-         A.VolumeSerialNumber == B.VolumeSerialNumber;
+  return A.FileIndexHigh         == B.FileIndexHigh &&
+         A.FileIndexLow          == B.FileIndexLow &&
+         A.VolumeSerialNumber    == B.VolumeSerialNumber;
 }
 
 std::error_code equivalent(const Twine &A, const Twine &B, bool &result) {
